@@ -3,6 +3,11 @@
 curscreen = nil
 gameContext = {}
 
+function gameContext:resetState()
+    self.boundCount = 0
+    self.player:reset_position(64, -16)
+end
+
 function gameContext:goToScreen(screenKey)
     if curscreen then
         curscreen:onExitScreen()
@@ -25,6 +30,7 @@ function _init()
         whiteboxLevel = whiteboxLevel
     }
 
+    hud:init(gameContext)
     for _, screen in pairs(gameContext.screens) do
         screen:init(gameContext)
     end

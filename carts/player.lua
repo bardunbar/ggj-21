@@ -8,7 +8,9 @@ player = {
     grounded = false,
     moving = false,
     direction = 0,
-    currentFrame = 0
+    currentFrame = 0,
+    numBounds = 0,
+    bounding = false
 
 }
 
@@ -64,7 +66,24 @@ function player:update()
 end
 
 function player:draw()
-    spr(1, self.x, self.y)
+    if(player.grounded == true and player.moving == false) then
+        -- play stationary animation
+        if(player.currentFrame < 600) then
+            spr(5, self.x, self.y)
+            player.currentFrame = player.currentFrame + 1
+        else
+            if(player.currentFrame < 800) then
+                spr(6, self.x, self.y)
+                player.currentFrame = player.currentFrame + 1
+            else
+                spr(6, self.x, self.y)
+                player.currentFrame = 0
+            end
+        end
+    else
+        -- check for motion and play animation for that motion
+        spr(5, self.x, self.y)
+    end
 end
 
 
