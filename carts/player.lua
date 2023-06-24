@@ -1,3 +1,30 @@
+
+local idle_animation = {
+    frames = {1, 2, 3, 4, 5},
+    frame_duration = 12,
+    cur_frame = 0,
+    cur_duration = 0,
+}
+
+function reset_animation(animation)
+    animation.cur_frame = 0
+    animation.cur_duration = 0
+end
+
+function get_frame(a)
+
+    a.cur_duration += 1
+    if a.cur_duration > a.frame_duration then
+        a.cur_frame += 1
+
+        if a.cur_frame > #a.frames then
+            a.cur_frame = 1
+        end
+    end
+
+    return a.frames[a.cur_frame]
+end
+
 local gravity = 7 * 1/60
 
 player = {
@@ -31,13 +58,10 @@ function player:update()
 
     -- Apply Gravity
     self.dy += gravity
-    -- if not self.grounded then
-    -- end
 
     -- Update Position
     self.x += self.dx
     self.y += self.dy
-
 
     -- Solve Collisions --
     local val = mget((self.x+4)/8,(self.y+8)/8)
@@ -62,7 +86,7 @@ function player:update()
 
     -- Set animation state variables
     self.direction = self.dx > 0 and 1 or self.dx < 0 and 0 or self.direction
-
+    self.moving = self.dx ~= 0 or self.dy ~= 0
 end
 
 function player:draw()
@@ -91,3 +115,5 @@ function player:reset_position(x, y)
     self.x, self.y = x, y
     self.dx, self.v_y = 0, 0
 end
+
+
