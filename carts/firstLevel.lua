@@ -5,6 +5,10 @@ function firstLevel:init(inGameContext)
 end
 
 function firstLevel:onEnterScreen()
+    self.gameContext:resetState()
+end
+
+function firstLevel:onExitScreen()
 
 end
 

@@ -6,7 +6,7 @@ function whiteboxLevel:init(inGameContext)
 end
 
 function whiteboxLevel:onEnterScreen()
-    self.gameContext.player:reset_position(64, -16)
+    self.gameContext:resetState()
 end
 
 function whiteboxLevel:onExitScreen()
@@ -20,5 +20,6 @@ end
 function whiteboxLevel:draw()
     map(0, 0, 0, 0, 16, 16)
     self.gameContext.player:draw()
+    hud:draw()
 end
 -- End required interface
