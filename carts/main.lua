@@ -16,6 +16,10 @@ function gameContext:goToScreen(screenKey)
     curscreen:onEnterScreen()
 end
 
+function gameContext:completeLevel()
+    self.isLevelComplete = true
+end
+
 -- Main functions
 
 function _init()
@@ -39,6 +43,7 @@ function _init()
 end
 
 function _update60()
+    utilities:update()
     curscreen:update()
 end
 
