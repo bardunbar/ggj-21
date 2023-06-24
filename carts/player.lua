@@ -8,6 +8,13 @@ local idle_animation = {
 
 local moving_animation = {
     frames = {8, 24, 40 }, 
+    frame_duration = 5,
+    cur_frame = 1,
+    cur_duration = 0,
+}
+
+local bounding_animation = {
+    frames = {8, 24, 40 }, 
     frame_duration = 6,
     cur_frame = 1,
     cur_duration = 0,
@@ -71,6 +78,7 @@ player = {
     dy = 0,
     accumulatedGravity = 0,
     grounded = false,
+    vertical = false,
     moving = false,
     direction = 0,
     currentAni = idle_animation,
@@ -82,7 +90,16 @@ player = {
         createBound(0, -5),
     },
     curBound = nil,
+    sense_data = {{0, 0}, {0, 0}, {0, 0}, {0, 0}},
 }
+
+function player:sense()
+    -- left
+
+    -- right
+
+
+end
 
 function player:solveCollisions(startx, starty)
     local val = mget((self.x+4)/8,(self.y+8)/8)
