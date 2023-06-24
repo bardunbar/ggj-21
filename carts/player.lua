@@ -1,13 +1,20 @@
 
 local idle_animation = {
-    frames = {1, 2, 3, 4, 5},
-    frame_duration = 12,
-    cur_frame = 0,
+    frames = {4, 4, 20},
+    frame_duration = 60,
+    cur_frame = 1,
+    cur_duration = 0,
+}
+
+local moving_animation = {
+    frames = {8, 24, 40 }, 
+    frame_duration = 6,
+    cur_frame = 1,
     cur_duration = 0,
 }
 
 function reset_animation(animation)
-    animation.cur_frame = 0
+    animation.cur_frame = 1
     animation.cur_duration = 0
 end
 
@@ -16,6 +23,7 @@ function get_frame(a)
     a.cur_duration += 1
     if a.cur_duration > a.frame_duration then
         a.cur_frame += 1
+        a.cur_duration = 0
 
         if a.cur_frame > #a.frames then
             a.cur_frame = 1
@@ -35,7 +43,7 @@ player = {
     grounded = false,
     moving = false,
     direction = 0,
-    currentFrame = 0,
+    currentAni = idle_animation,
     numBounds = 0,
     bounding = false
 
@@ -92,21 +100,20 @@ end
 function player:draw()
     if(player.grounded == true and player.moving == false) then
         -- play stationary animation
-        if(player.currentFrame < 600) then
-            spr(5, self.x, self.y)
-            player.currentFrame = player.currentFrame + 1
-        else
-            if(player.currentFrame < 800) then
-                spr(6, self.x, self.y)
-                player.currentFrame = player.currentFrame + 1
-            else
-                spr(6, self.x, self.y)
-                player.currentFrame = 0
-            end
+        if(player.currentAni != idle_animation) then
+            player.currentAni = idle_animation
+            reset_animation(player.currentAni)
         end
+
+        spr(get_frame(player.currentAni) + player.direction, self.x, self.y)
     else
         -- check for motion and play animation for that motion
-        spr(5, self.x, self.y)
+        if(player.currentAni != moving_animation) then
+            player.currentAni = moving_animation
+            reset_animation(player.currentAni)
+        end
+
+        spr(get_frame(player.currentAni) + player.direction, self.x, self.y)
     end
 end
 
