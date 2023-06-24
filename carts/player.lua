@@ -62,7 +62,7 @@ function player:update()
 
     -- Set animation state variables
     self.direction = self.dx > 0 and 1 or self.dx < 0 and 0 or self.direction
-
+    self.moving = self.dx ~= 0 or self.dy ~= 0
 end
 
 function player:draw()
