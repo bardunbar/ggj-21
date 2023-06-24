@@ -48,13 +48,22 @@ player = {
     dx = 0,
     dy = 0,
     grounded = false,
+    vertical = false,
     moving = false,
     direction = 0,
     currentAni = idle_animation,
     numBounds = 0,
-    bounding = false
-
+    bounding = false,
+    sense_data = {{0, 0}, {0, 0}, {0, 0}, {0, 0}},
 }
+
+function player:sense()
+    -- left
+
+    -- right
+
+
+end
 
 function player:update()
 
