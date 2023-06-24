@@ -28,9 +28,9 @@ function player:update()
     end
 
     -- Apply Gravity
-    if not self.grounded then
-        self.dy += gravity
-    end
+    self.dy += gravity
+    -- if not self.grounded then
+    -- end
 
     -- Update Position
     self.x += self.dx
@@ -42,6 +42,7 @@ function player:update()
     if fget(val, 0) then
         self.y = flr((self.y)/8)*8
         self.grounded = true
+        self.dy = 0
     end
 
     local xoffset=0
