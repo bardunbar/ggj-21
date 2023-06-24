@@ -50,6 +50,10 @@ function gameContext:nextLevel()
     end
 end
 
+function gameContext:hasNextLevel()
+    return self.levelIndex and self.levelIndex < #self.levelOrder
+end
+
 -- Main functions
 
 function _init()
