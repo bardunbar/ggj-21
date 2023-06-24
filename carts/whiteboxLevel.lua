@@ -14,4 +14,5 @@ end
 
 function whiteboxLevel:draw()
     map(0, 0, 0, 0, 16, 16)
+    self.gameContext.player:draw()
 end
