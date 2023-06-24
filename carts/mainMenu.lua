@@ -1,24 +1,10 @@
 mainMenu = {}
 
 local function onStartGame()
-
+    mainMenu.gameContext:goToScreen("whiteboxLevel")
 end
 
 local function onOpenCredits()
-
-end
-
-function mainMenu:init(inGameContext)
-    self.gameContext = inGameContext
-
-    self.highlightedButton = 1
-    self.buttonOptions = { 
-        { text = "START GAME", onPress = onStartGame }, 
-        { text = "CREDITS", onPress = onOpenCredits}, 
-    }
-end
-
-function mainMenu:onEnterScreen()
 
 end
 
@@ -44,47 +30,47 @@ local function updateHighlightColor()
 end
 
 function mainMenu:upInput()
-    if not self.lastUpInput then
-        self.highlightedButton = self.highlightedButton - 1
-        if self.highlightedButton < 1 then
-            self.highlightedButton = #self.buttonOptions
-        end
+    self.highlightedButton = self.highlightedButton - 1
+    if self.highlightedButton < 1 then
+        self.highlightedButton = #self.buttonOptions
     end
 end
 
 function mainMenu:downInput()
-    if not self.lastDownInput then
-        self.highlightedButton = self.highlightedButton + 1
-        if self.highlightedButton > #self.buttonOptions then
-            self.highlightedButton = 1
-        end
+    self.highlightedButton = self.highlightedButton + 1
+    if self.highlightedButton > #self.buttonOptions then
+        self.highlightedButton = 1
     end
 end
 
-function mainMenu:zInputPressed()
+-- Start required interface
+function mainMenu:init(inGameContext)
+    self.gameContext = inGameContext
+
+    self.highlightedButton = 1
+    self.buttonOptions = { 
+        { text = "START GAME", onPress = onStartGame }, 
+        { text = "CREDITS", onPress = onOpenCredits}, 
+    }
+end
+
+function mainMenu:onEnterScreen()
 
 end
 
-function mainMenu:zInputReleased()
-    self.buttonOptions[self.highlightedButton].onPress()
+function mainMenu:onExitScreen()
+
 end
 
 function mainMenu:update()
-    if btn(2) then
+    if btnp(2) then
         self:upInput()
-    elseif btn(3) then
+    elseif btnp(3) then
         self:downInput()
     end
-    if btn(4) and not self.lastZInput then
-        self:zInputPressed()
-    elseif not btn(4) and self.lastZInput then
-        self:zInputReleased()
+    if btnp(4) then
+        self.buttonOptions[self.highlightedButton].onPress()
     end
-
-    -- store inputs for next update
-    self.lastUpInput = btn(2)
-    self.lastDownInput = btn(3)
-    self.lastZInput = btn(4)
 end
 
 function mainMenu:draw()
@@ -94,7 +80,8 @@ function mainMenu:draw()
     for i = 1, #self.buttonOptions do
         local isHighlighted = i == self.highlightedButton
         local prefix = isHighlighted and " > " or "  "
-        local color = (isHighlighted and self.lastZInput and 7) or (isHighlighted and highlightColor) or 6
+        local color = (isHighlighted and highlightColor) or 6
         print(prefix .. self.buttonOptions[i].text, xoffset, yoffset*i + ystart, color)
     end
 end
+-- End required interface
