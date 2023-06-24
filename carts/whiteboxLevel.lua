@@ -5,11 +5,11 @@ function whiteboxLevel:init(inGameContext)
 end
 
 function whiteboxLevel:onEnterScreen()
-
+    self.gameContext.player:reset_position(64, -16)
 end
 
 function whiteboxLevel:update()
-
+    self.gameContext.player:update()
 end
 
 function whiteboxLevel:draw()
