@@ -5,7 +5,10 @@ player = {
     y = 64,
     v_x = 0,
     v_y = 0,
-    grounded = false
+    grounded = false,
+    moving = false,
+    direction = 0,
+    currentFrame = 0
 }
 
 function player:update()
