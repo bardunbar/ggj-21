@@ -17,7 +17,7 @@ function hud:update()
 end
 
 function hud:draw()
-    print("bounds: " .. self.gameContext.boundCount, 1, 121, 0)
+    print("bounds: " .. #self.gameContext.player.boundQueue, 1, 121, 0)
     if self.gameContext.isLevelComplete then
         if self.gameContext:hasNextLevel() then
             print("level complete", 36, 54, utilities:getHighlightColor())

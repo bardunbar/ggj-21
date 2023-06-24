@@ -11,7 +11,7 @@ gameContext = {
     levelOrder =
     {
         "whiteboxLevel",
-        "firstLevel"
+        "firstLevel",
     },
 }
 

@@ -21,6 +21,14 @@ function printDebug(inDebugString)
     debugString = inDebugString
 end
 
+function remove(t, indexToRemove)
+    local result = t[indexToRemove]
+    for i = indexToRemove, #t do
+        t[i] = t[i + 1]
+    end
+    return result
+end
+
 function utilities:update()
     updateHighlightColor()
 end

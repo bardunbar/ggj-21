@@ -33,6 +33,35 @@ function get_frame(a)
     return a.frames[a.cur_frame]
 end
 
+local function createBound(xDirection, yDirection)
+    local bound = {}
+    bound.xDirection = xDirection
+    bound.xVelocity = xDirection
+    bound.yDirection = yDirection
+    bound.yVelocity = yDirection
+    bound.update = function(self)
+        if self.xVelocity ~= 0 then
+            local prevVelocity = self.xVelocity
+            self.xVelocity -= self.xDirection/60 -- decrease velocity over a second
+            if prevVelocity * self.xVelocity < 0 then
+                self.xVelocity = 0
+            end
+        end
+        if self.yVelocity ~= 0 then
+            local prevVelocity = self.yVelocity
+            self.yVelocity -= self.yDirection/60 -- decrease velocity over a second
+            if prevVelocity * self.yVelocity < 0 then
+                self.yVelocity = 0
+            end
+        end
+        printDebug("x: " .. self.xVelocity .. ", y: " .. self.yVelocity)
+    end
+    bound.isComplete = function(self)
+        return self.xVelocity == 0 and self.yVelocity == 0
+    end
+    return bound
+end
+
 local gravity = 7 * 1/60
 
 player = {
@@ -40,43 +69,27 @@ player = {
     y = 64,
     dx = 0,
     dy = 0,
+    accumulatedGravity = 0,
     grounded = false,
     moving = false,
     direction = 0,
     currentAni = idle_animation,
     numBounds = 0,
-    bounding = false
-
+    bounding = false,
+    boundQueue = {
+        createBound(0, -5),
+        createBound(0, -5),
+        createBound(0, -5),
+    },
+    curBound = nil,
 }
 
-function player:update()
-
-    -- Set up initial assumptions and data
-    local startx = self.x
-    self.dx=0
-    self.grounded = false
-
-    -- Update Velocity
-    if btn(0) then --left
-        self.dx=-2
-    end
-    if btn(1) then --right
-        self.dx=2
-    end
-
-    -- Apply Gravity
-    self.dy += gravity
-
-    -- Update Position
-    self.x += self.dx
-    self.y += self.dy
-
-    -- Solve Collisions --
+function player:solveCollisions(startx, starty)
     local val = mget((self.x+4)/8,(self.y+8)/8)
     if fget(val, 0) then
         self.y = flr((self.y)/8)*8
         self.grounded = true
-        self.dy = 0
+        self.accumulatedGravity = 0
     end
 
     local xoffset=0
@@ -91,8 +104,57 @@ function player:update()
         --mostly works and is simpler.
         self.x = startx
     end
+end
 
+function player:update()
+
+    -- Set up initial assumptions and data
+    local startx = self.x
+    local starty = self.y
+    local wasGrounded = self.grounded
+    self.dx=0
+    self.dy=0
+    self.grounded = false
+    
+    -- Update Velocity
+    if btn(0) then --left
+        self.dx=-2
+    end
+    if btn(1) then --right
+        self.dx=2
+    end
+    
+    -- Apply Gravity if not grounded
+    self.dy += self.accumulatedGravity
+    self.accumulatedGravity += gravity
+
+    if self.curBound then
+        self.curBound:update()
+        if self.curBound:isComplete() then
+            self.curBound = nil
+        else
+            self.dx += self.curBound.xVelocity
+            self.dy += self.curBound.yVelocity
+        end
+    elseif wasGrounded then
+        -- Check if we can BOUND
+        self.bounding = false
+        if btnp(4) and self.boundQueue[1] then
+            self.curBound = remove(self.boundQueue, 1)
+            self.dx += self.curBound.xVelocity
+            self.dy += self.curBound.yVelocity
+            self.bounding = true
+        end
+    end
+    
+    -- Update Position
+    self.x += self.dx
+    self.y += self.dy
+    
+    self:solveCollisions(startx, starty)
+    
     -- Set animation state variables
+    printDebug("self.dx: " .. self.dx .. ", self.dy: " .. self.dy)
     self.direction = self.dx > 0 and 1 or self.dx < 0 and 0 or self.direction
     self.moving = self.dx ~= 0 or self.dy ~= 0
 end
@@ -116,7 +178,6 @@ function player:draw()
         spr(get_frame(player.currentAni) + player.direction, self.x, self.y)
     end
 end
-
 
 function player:reset_position(x, y)
     self.x, self.y = x, y
