@@ -1,25 +1,27 @@
 whiteboxLevel = {}
+createLevel(whiteboxLevel)
+local super = levelBase
 
 -- Start required interface
 function whiteboxLevel:init(inGameContext)
-    self.gameContext = inGameContext
+    super.init(self, inGameContext)
 end
 
 function whiteboxLevel:onEnterScreen()
-    self.gameContext:resetState()
+    super.onEnterScreen(self)
 end
 
 function whiteboxLevel:onExitScreen()
-
+    super.onExitScreen(self)
 end
 
 function whiteboxLevel:update()
-    self.gameContext.player:update()
+    super.update(self)
 end
 
 function whiteboxLevel:draw()
     map(0, 0, 0, 0, 16, 16)
-    self.gameContext.player:draw()
-    hud:draw()
+    super.draw(self)
 end
+
 -- End required interface
