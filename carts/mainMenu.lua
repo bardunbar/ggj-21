@@ -1,13 +1,10 @@
 mainMenu = {}
 
-function mainMenu:init(inGameContext)
-    self.gameContext = inGameContext
-
-    self.highlightedButton = 1
-    self.buttonOptions = { "Start Game", "Credits", "Another Button" }
+local function onStartGame()
+    mainMenu.gameContext:goToScreen("whiteboxLevel")
 end
 
-function mainMenu:onEnterScreen()
+local function onOpenCredits()
 
 end
 
@@ -33,42 +30,58 @@ local function updateHighlightColor()
 end
 
 function mainMenu:upInput()
-    if not self.lastUpInput then
-        self.highlightedButton = self.highlightedButton - 1
-        if self.highlightedButton < 1 then
-            self.highlightedButton = #self.buttonOptions
-        end
+    self.highlightedButton = self.highlightedButton - 1
+    if self.highlightedButton < 1 then
+        self.highlightedButton = #self.buttonOptions
     end
 end
 
 function mainMenu:downInput()
-    if not self.lastDownInput then
-        self.highlightedButton = self.highlightedButton + 1
-        if self.highlightedButton > #self.buttonOptions then
-            self.highlightedButton = 1
-        end
+    self.highlightedButton = self.highlightedButton + 1
+    if self.highlightedButton > #self.buttonOptions then
+        self.highlightedButton = 1
     end
 end
 
+-- Start required interface
+function mainMenu:init(inGameContext)
+    self.gameContext = inGameContext
+
+    self.highlightedButton = 1
+    self.buttonOptions = { 
+        { text = "START GAME", onPress = onStartGame }, 
+        { text = "CREDITS", onPress = onOpenCredits}, 
+    }
+end
+
+function mainMenu:onEnterScreen()
+
+end
+
+function mainMenu:onExitScreen()
+
+end
+
 function mainMenu:update()
-    if btn(2) then
+    if btnp(2) then
         self:upInput()
-    elseif btn(3) then
+    elseif btnp(3) then
         self:downInput()
     end
-
-    self.lastUpInput = btn(2)
-    self.lastDownInput = btn(3)
+    if btnp(4) then
+        self.buttonOptions[self.highlightedButton].onPress()
+    end
 end
 
 function mainMenu:draw()
     updateHighlightColor()
-    print("Out of Bounds", 30, 30, 7)
+    print("out of bounds", 30, 30, 7)
 
     for i = 1, #self.buttonOptions do
         local isHighlighted = i == self.highlightedButton
         local prefix = isHighlighted and " > " or "  "
-        local color = isHighlighted and highlightColor or 6
-        print(prefix .. self.buttonOptions[i], xoffset, yoffset*i + ystart, color)
+        local color = (isHighlighted and highlightColor) or 6
+        print(prefix .. self.buttonOptions[i].text, xoffset, yoffset*i + ystart, color)
     end
 end
+-- End required interface

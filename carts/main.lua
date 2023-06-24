@@ -3,17 +3,33 @@
 curscreen = nil
 gameContext = {}
 
-function _init()
-    print("Hello Game Jam!")
+function gameContext:goToScreen(screenKey)
+    if curscreen then
+        curscreen:onExitScreen()
+    end
+    curscreen = self.screens[screenKey]
+    curscreen:onEnterScreen()
+end
 
+-- Main functions
+
+function _init()
     -- Assign player to the context
     gameContext.player = player
+    player:draw()
+    -- gameContext.player:draw()
 
-    -- init all screens
-    mainMenu:init(gameContext)
-    whiteboxLevel:init(gameContext)
+    gameContext.screens =
+    {
+        mainMenu = mainMenu,
+        whiteboxLevel = whiteboxLevel
+    }
 
-    curscreen = mainMenu
+    for _, screen in pairs(gameContext.screens) do
+        screen:init(gameContext)
+    end
+
+    gameContext:goToScreen("mainMenu")
 end
 
 function _update60()
