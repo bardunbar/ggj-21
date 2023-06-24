@@ -16,8 +16,19 @@ local function updateHighlightColor()
     end
 end
 
+local debugString
+function printDebug(inDebugString)
+    debugString = inDebugString
+end
+
 function utilities:update()
     updateHighlightColor()
+end
+
+function utilities:draw()
+    if debugString then
+        print(debugString, 0, 0, 8)
+    end
 end
 
 function utilities:getHighlightColor()

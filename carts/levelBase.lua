@@ -19,9 +19,10 @@ end
 function levelBase:update()
     self.gameContext.player:update()
 
-    if btnp(5) then
+    if btnp(5) and not self.gameContext.isLevelComplete then
         self.gameContext:completeLevel()
     end
+    hud:update()
 end
 
 function levelBase:draw()
