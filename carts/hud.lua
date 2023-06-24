@@ -5,5 +5,5 @@ function hud:init(gameContext)
 end
 
 function hud:draw()
-    print("bounds")
+    print("bounds: " .. self.gameContext.boundCount, 1, 121, 0)
 end
