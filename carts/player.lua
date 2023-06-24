@@ -14,18 +14,18 @@ player = {
 
 function player:update()
 
+    -- Set up initial assumptions and data
     local startx = self.x
+    self.dx=0
+    self.grounded = false
 
     -- Update Velocity
-    self.dx=0
     if btn(0) then --left
         self.dx=-2
     end
     if btn(1) then --right
         self.dx=2
     end
-
-
 
     -- Apply Gravity
     if not self.grounded then
@@ -36,7 +36,8 @@ function player:update()
     self.x += self.dx
     self.y += self.dy
 
-    -- Solve Collision
+
+    -- Solve Collisions --
     local val = mget((self.x+4)/8,(self.y+8)/8)
     if fget(val, 0) then
         self.y = flr((self.y)/8)*8
@@ -57,7 +58,7 @@ function player:update()
     end
 
     -- Set animation state variables
-
+    self.direction = self.dx > 0 and 1 or self.dx < 0 and 0 or self.direction
 
 end
 
