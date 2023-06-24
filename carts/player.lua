@@ -8,6 +8,13 @@ local idle_animation = {
 
 local moving_animation = {
     frames = {8, 24, 40 }, 
+    frame_duration = 5,
+    cur_frame = 1,
+    cur_duration = 0,
+}
+
+local bounding_animation = {
+    frames = {8, 24, 40 }, 
     frame_duration = 6,
     cur_frame = 1,
     cur_duration = 0,
