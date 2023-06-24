@@ -5,11 +5,9 @@ gameContext = {}
 
 function _init()
     print("Hello Game Jam!")
-    
-    -- Create the player
-    gameContext.player = {}
-    local player = gameContext.player
-    player.position = { x = 0, y = 0 } -- not sure what this should be yet
+
+    -- Assign player to the context
+    gameContext.player = player
 
     -- init all screens
     mainMenu:init(gameContext)
