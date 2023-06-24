@@ -1,5 +1,3 @@
-#include mainMenu.lua
-#include whiteboxLevel.lua
 
 -- Current screen of the game
 curscreen = nil

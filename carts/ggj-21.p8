@@ -2,6 +2,8 @@ pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
 
+#include mainmenu.lua
+#include whiteboxlevel.lua
 #include main.lua
 
 __gfx__
