@@ -156,11 +156,16 @@ function player:update()
     elseif wasGrounded then
         -- Check if we can BOUND
         self.bounding = false
-        if btnp(4) and self.boundQueue[1] then
-            self.curBound = remove(self.boundQueue, 1)
-            self.dx += self.curBound.xVelocity
-            self.dy += self.curBound.yVelocity
-            self.bounding = true
+        if btnp(4) then
+            if self.boundQueue[1] then
+                sfx(0)
+                self.curBound = remove(self.boundQueue, 1)
+                self.dx += self.curBound.xVelocity
+                self.dy += self.curBound.yVelocity
+                self.bounding = true
+            else
+                sfx(4)    
+            end
         end
     end
     
