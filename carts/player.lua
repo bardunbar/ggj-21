@@ -1,3 +1,4 @@
+local boundY = -5
 
 local idle_animation = {
     frames = {4, 4, 20},
@@ -137,6 +138,22 @@ function player:solveCollisions(startx, starty)
 end
 
 function player:processPickups()
+
+    local val = mget(self.x/8, self.y/8)
+    if fget(val, 1) then
+        add(self.boundQueue, createBound(0, boundY))
+        mset(self.x/8, self.y/8, 0) 
+    end
+
+    if fget(val, 2) then
+        add(self.boundQueue, createBound(0, boundY))
+        add(self.boundQueue, createBound(0, boundY))
+        add(self.boundQueue, createBound(0, boundY))
+        add(self.boundQueue, createBound(0, boundY))
+        add(self.boundQueue, createBound(0, boundY))
+        mset(self.x/8, self.y/8, 0) 
+    end
+
 end
 
 function player:update()
