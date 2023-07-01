@@ -85,14 +85,14 @@ player = {
     numBounds = 0,
     bounding = false,
     boundQueue = {
-        createBound(0, -3),
-        createBound(0, -3),
-        createBound(0, -3),
-        createBound(0, -3),
-        createBound(0, -3),
-        createBound(0, -3),
-        createBound(0, -3),
-        createBound(0, -3),
+        createBound(0, -5),
+        createBound(0, -5),
+        createBound(0, -5),
+        createBound(0, -5),
+        createBound(0, -5),
+        createBound(0, -5),
+        createBound(0, -5),
+        createBound(0, -5),
     },
     curBound = nil,
     sense_data = {{0, 0}, {0, 0}, {0, 0}, {0, 0}},
@@ -107,21 +107,6 @@ function player:sense()
 end
 
 function player:solveCollisions(startx, starty)
-    local val = mget((self.x+4)/8,(self.y+8)/8)
-    if fget(val, 0) then
-        self.y = flr((self.y)/8)*8
-        self.grounded = true
-        self.accumulatedGravity = 0
-    end
-
-    val = mget((self.x + 4)/8, self.y / 8)
-    if fget(val, 0) then
-
-        printDebug("Impact!")
-    else
-        printDebug("No Impact!")
-    end
-
     local xoffset=0
     if self.dx>0 then xoffset=7 end
 
@@ -133,6 +118,21 @@ function player:solveCollisions(startx, starty)
         --the edge of the wall but this
         --mostly works and is simpler.
         self.x = startx
+    end
+
+    local val = mget((self.x+4)/8,(self.y+8)/8)
+    if fget(val, 0) then
+        self.y = flr((self.y)/8)*8
+        self.grounded = true
+        self.accumulatedGravity = 0
+    end
+
+    val = mget((self.x + 4)/8, self.y / 8)
+    if fget(val, 0) then
+        self.y = starty
+        if self.curBound then
+            self.curBound.yVelocity = 0
+        end
     end
 end
 
@@ -180,7 +180,7 @@ function player:update()
                 self.dy += self.curBound.yVelocity
                 self.bounding = true
             else
-                sfx(4)    
+                sfx(4)
             end
         end
     end
