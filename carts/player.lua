@@ -1,4 +1,4 @@
-local boundY = -5
+local boundY = -3.5
 
 local idle_animation = {
     frames = {4, 4, 20},
@@ -98,14 +98,14 @@ player = {
     bounding = false,
     enteringMap = true,
     boundQueue = {
-        createBound(0, -5),
-        createBound(0, -5),
-        createBound(0, -5),
-        createBound(0, -5),
-        createBound(0, -5),
-        createBound(0, -5),
-        createBound(0, -5),
-        createBound(0, -5),
+        -- createBound(0, -5),
+        -- createBound(0, -5),
+        -- createBound(0, -5),
+        -- createBound(0, -5),
+        -- createBound(0, -5),
+        -- createBound(0, -5),
+        -- createBound(0, -5),
+        -- createBound(0, -5),
     },
     curBound = nil,
     sense_data = {{0, 0}, {0, 0}, {0, 0}, {0, 0}},
