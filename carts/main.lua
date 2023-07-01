@@ -16,8 +16,17 @@ gameContext = {
 }
 
 function gameContext:resetState()
-    self.boundCount = 0
+    -- reset powerups
+    reload(0x1000, 0x1000, 0x2000)
+
+    -- reset player position
     self.player:reset_position(64, -16)
+
+    -- reset bounds queue
+    self.player.boundQueue = {}
+
+    -- reset player velocity so we don't go flying through the floor
+    self.player.accumulatedGravity = 0
 end
 
 function gameContext:goToScreen(screenKey, levelIndex)
