@@ -4,6 +4,7 @@ local super = levelBase
 
 function firstLevel:init(inGameContext)
     super.init(self, inGameContext)
+    self.mx, self.my = 16, 0
 end
 
 function firstLevel:onEnterScreen()
@@ -19,8 +20,5 @@ function firstLevel:update()
 end
 
 function firstLevel:draw()
-    rectfill(80,80,120,100,12)
-    circfill(70,90,20,14)
-    for i=1,4 do print(i) end
     super.draw(self)
 end

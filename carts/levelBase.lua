@@ -16,6 +16,10 @@ function levelBase:onExitScreen()
 
 end
 
+function levelBase:getMapOffset()
+    return self.mx, self.my
+end
+
 function levelBase:update()
     self.gameContext.player:update()
 
@@ -27,6 +31,7 @@ function levelBase:update()
 end
 
 function levelBase:draw()
+    map(self.mx, self.my, 0, 0, 16, 16)
     self.gameContext.player:draw()
     hud:draw()
 end

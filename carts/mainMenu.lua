@@ -1,6 +1,7 @@
 mainMenu = {}
 
 local function onStartGame()
+    -- mainMenu.gameContext:goToScreen("firstLevel")
     mainMenu.gameContext:goToScreen("whiteboxLevel")
 end
 
@@ -32,9 +33,9 @@ function mainMenu:init(inGameContext)
     self.gameContext = inGameContext
 
     self.highlightedButton = 1
-    self.buttonOptions = { 
-        { text = "START GAME", onPress = onStartGame }, 
-        { text = "CREDITS", onPress = onOpenCredits}, 
+    self.buttonOptions = {
+        { text = "START GAME", onPress = onStartGame },
+        { text = "CREDITS", onPress = onOpenCredits},
     }
 end
 
