@@ -5,7 +5,7 @@ local super = levelBase
 -- Start required interface
 function whiteboxLevel:init(inGameContext)
     super.init(self, inGameContext)
-    self.mx, self.my = 0, 0
+    self.mx, self.my = 0, 1
 end
 
 function whiteboxLevel:onEnterScreen()
