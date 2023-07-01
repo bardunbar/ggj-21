@@ -28,8 +28,8 @@ function createMapLevel(level_x, level_y)
 
 
     setmetatable(level, levelBase)
-    level.mx = level_x * 16
-    level.my = level_y * 16
+    level.mx = level_x
+    level.my = level_y
     return level
 end
 

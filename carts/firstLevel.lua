@@ -4,7 +4,7 @@ local super = levelBase
 
 function firstLevel:init(inGameContext)
     super.init(self, inGameContext)
-    self.mx, self.my = 16, 0
+    self.mx, self.my = 17, 0
 end
 
 function firstLevel:onEnterScreen()
