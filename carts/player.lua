@@ -7,14 +7,14 @@ local idle_animation = {
 }
 
 local moving_animation = {
-    frames = {8, 24, 40 }, 
+    frames = {8, 24, 40 },
     frame_duration = 5,
     cur_frame = 1,
     cur_duration = 0,
 }
 
 local bounding_animation = {
-    frames = {8, 24, 40 }, 
+    frames = {8, 24, 40 },
     frame_duration = 6,
     cur_frame = 1,
     cur_duration = 0,
@@ -85,9 +85,14 @@ player = {
     numBounds = 0,
     bounding = false,
     boundQueue = {
-        createBound(0, -5),
-        createBound(0, -5),
-        createBound(0, -5),
+        createBound(0, -3),
+        createBound(0, -3),
+        createBound(0, -3),
+        createBound(0, -3),
+        createBound(0, -3),
+        createBound(0, -3),
+        createBound(0, -3),
+        createBound(0, -3),
     },
     curBound = nil,
     sense_data = {{0, 0}, {0, 0}, {0, 0}, {0, 0}},
@@ -109,6 +114,14 @@ function player:solveCollisions(startx, starty)
         self.accumulatedGravity = 0
     end
 
+    val = mget((self.x + 4)/8, self.y / 8)
+    if fget(val, 0) then
+
+        printDebug("Impact!")
+    else
+        printDebug("No Impact!")
+    end
+
     local xoffset=0
     if self.dx>0 then xoffset=7 end
 
@@ -123,6 +136,9 @@ function player:solveCollisions(startx, starty)
     end
 end
 
+function player:processPickups()
+end
+
 function player:update()
 
     -- Set up initial assumptions and data
@@ -132,7 +148,7 @@ function player:update()
     self.dx=0
     self.dy=0
     self.grounded = false
-    
+
     -- Update Velocity
     if btn(0) then --left
         self.dx=-2
@@ -140,7 +156,7 @@ function player:update()
     if btn(1) then --right
         self.dx=2
     end
-    
+
     -- Apply Gravity if not grounded
     self.dy += self.accumulatedGravity
     self.accumulatedGravity += gravity
@@ -163,15 +179,16 @@ function player:update()
             self.bounding = true
         end
     end
-    
+
     -- Update Position
     self.x += self.dx
     self.y += self.dy
-    
+
     self:solveCollisions(startx, starty)
-    
+    self:processPickups()
+
     -- Set animation state variables
-    printDebug("self.dx: " .. self.dx .. ", self.dy: " .. self.dy)
+    -- printDebug("self.dx: " .. self.dx .. ", self.dy: " .. self.dy)
     self.direction = self.dx > 0 and 1 or self.dx < 0 and 0 or self.direction
     self.moving = self.dx ~= 0 or self.dy ~= 0
 end
