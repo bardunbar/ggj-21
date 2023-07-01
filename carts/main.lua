@@ -7,7 +7,7 @@ gameContext = {
         mainMenu = mainMenu,
         whiteboxLevel = whiteboxLevel,
         firstLevel = firstLevel,
-        secondLevel = createMapLevel(0, 0),
+        secondLevel = createMapLevel(2, 0),
         thirdLevel = createMapLevel(1, 0),
     },
     levelOrder =
