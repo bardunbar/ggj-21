@@ -22,3 +22,7 @@ end
 function firstLevel:draw()
     super.draw(self)
 end
+
+function firstLevel:getMapOffset()
+    return super.getMapOffset(self)
+end

@@ -24,4 +24,8 @@ function whiteboxLevel:draw()
     super.draw(self)
 end
 
+function whiteboxLevel:getMapOffset()
+    return super.getMapOffset(self)
+end
+
 -- End required interface

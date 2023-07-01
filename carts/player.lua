@@ -41,6 +41,11 @@ function get_frame(a)
     return a.frames[a.cur_frame]
 end
 
+function level_mget(x, y)
+    local mx, my = curscreen:getMapOffset()
+    return mget(x + (mx or 0), y + (my or 0))
+end
+
 local function createBound(xDirection, yDirection)
     local bound = {}
     bound.xDirection = xDirection
@@ -110,15 +115,16 @@ end
 
 function player:solveCollisions(startx, starty)
 
+
     local xoffset=0
     if self.dx>0 then xoffset=7 end
 
-    local h=mget((self.x + xoffset) / 8, (self.y + 4) / 8)
+    local h=level_mget((self.x + xoffset) / 8, (self.y + 4) / 8)
     if fget(h,0) then
         self.x = startx
     end
 
-    local val = mget((self.x+4)/8,(self.y+8)/8)
+    local val = level_mget((self.x+4)/8,(self.y+8)/8)
     if fget(val, 0) then
         self.y = flr((self.y)/8)*8
         self.grounded = true
@@ -126,7 +132,7 @@ function player:solveCollisions(startx, starty)
         self.enteringMap = false
     end
 
-    val = mget((self.x + 4)/8, self.y / 8)
+    val = level_mget((self.x + 4)/8, self.y / 8)
     if fget(val, 0) then
         self.y = flr((self.y)/8 + 1)*8
         if self.curBound then
@@ -138,7 +144,7 @@ end
 
 function player:processPickups()
 
-    local val = mget(self.x/8, self.y/8)
+    local val = level_mget(self.x/8, self.y/8)
     if fget(val, 1) then
         add(self.boundQueue, createBound(0, boundY))
         mset(self.x/8, self.y/8, 0)
