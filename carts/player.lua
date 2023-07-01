@@ -83,7 +83,7 @@ player = {
     moving = false,
     direction = 0,
     currentAni = idle_animation,
-    numBounds = 0,
+    numResets = -1,
     bounding = false,
     boundQueue = {
         createBound(0, -5),
