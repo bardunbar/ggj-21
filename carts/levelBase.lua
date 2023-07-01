@@ -9,7 +9,7 @@ function levelBase:init(inGameContext)
 end
 
 function levelBase:onEnterScreen()
-    self.gameContext:resetState()
+    self.gameContext:resetState(true)
 end
 
 function levelBase:onExitScreen()
