@@ -46,6 +46,11 @@ function level_mget(x, y)
     return mget(x + (mx or 0), y + (my or 0))
 end
 
+function level_mset(x, y, v)
+    local mx, my = curscreen:getMapOffset()
+    return mset(x + (mx or 0), y + (my or 0), v)
+end
+
 local function createBound(xDirection, yDirection)
     local bound = {}
     bound.xDirection = xDirection
@@ -86,6 +91,7 @@ player = {
     grounded = false,
     vertical = false,
     moving = false,
+    freeze = false,
     direction = 0,
     currentAni = idle_animation,
     numResets = -1,
@@ -147,7 +153,7 @@ function player:processPickups()
     local val = level_mget(self.x/8, self.y/8)
     if fget(val, 1) then
         add(self.boundQueue, createBound(0, boundY))
-        mset(self.x/8, self.y/8, 0)
+        level_mset(self.x/8, self.y/8, 0)
     end
 
     if fget(val, 2) then
@@ -156,16 +162,28 @@ function player:processPickups()
         add(self.boundQueue, createBound(0, boundY))
         add(self.boundQueue, createBound(0, boundY))
         add(self.boundQueue, createBound(0, boundY))
-        mset(self.x/8, self.y/8, 0)
+        level_mset(self.x/8, self.y/8, 0)
     end
 
 end
 
 function player:checkWinCondition()
     -- check win condition and send to next level if true
+    if not self.enteringMap then
+        local tile_x, tile_y = (self.x / 8), (self.y / 8)
+        if tile_x < -1 or tile_y > 16 or tile_y < -1 or tile_y > 16 then
+            -- We have escaped the bounds!!
+            gameContext:completeLevel()
+            self.freeze = true
+        end
+    end
 end
 
 function player:update()
+
+    if self.freeze then
+        return
+    end
 
     -- Set up initial assumptions and data
     local startx = self.x

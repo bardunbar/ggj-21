@@ -24,9 +24,10 @@ function gameContext:resetState()
     self.player.boundQueue = {}
     self.player.accumulatedGravity = 0
     self.player.enteringMap = true
+    self.player.freeze = false
 
     -- add reset to counter
-    self.player.numResets = self.player.numResets + 1 
+    self.player.numResets += 1
 end
 
 function gameContext:goToScreen(screenKey, levelIndex)
@@ -61,6 +62,11 @@ end
 
 function gameContext:hasNextLevel()
     return self.levelIndex and self.levelIndex < #self.levelOrder
+end
+
+function gameContext:resetGame()
+    self.isLevelComplete = false
+    self.player.numResets = -1
 end
 
 -- Main functions
