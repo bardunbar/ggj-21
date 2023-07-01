@@ -23,6 +23,7 @@ function gameContext:resetState()
     self.player:reset_position(64, -16)
     self.player.boundQueue = {}
     self.player.accumulatedGravity = 0
+    self.player.enteringMap = true
 
     -- add reset to counter
     self.player.numResets = self.player.numResets + 1 
