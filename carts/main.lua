@@ -6,12 +6,16 @@ gameContext = {
     {
         mainMenu = mainMenu,
         whiteboxLevel = whiteboxLevel,
-        firstLevel = firstLevel
+        firstLevel = firstLevel,
+        secondLevel = createMapLevel(0, 0),
+        thirdLevel = createMapLevel(1, 0),
     },
     levelOrder =
     {
         "whiteboxLevel",
         "firstLevel",
+        "secondLevel",
+        "thirdLevel",
     },
 }
 
@@ -69,6 +73,7 @@ end
 function gameContext:resetGame()
     self.isLevelComplete = false
     self.player.numResets = 0
+    self:goToScreen("mainMenu")
 end
 
 -- Main functions

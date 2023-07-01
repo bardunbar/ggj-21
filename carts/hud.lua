@@ -10,8 +10,7 @@ function hud:update()
             if self.gameContext:hasNextLevel() then
                 self.gameContext:nextLevel()
             else
-                self.gameContext.isLevelComplete = false
-                self.gameContext:goToScreen("mainMenu")
+                self.gameContext:resetGame()
             end
         end
     end

@@ -4,6 +4,35 @@ function createLevel(subclass)
     setmetatable(subclass, levelBase)
 end
 
+function createMapLevel(level_x, level_y)
+    local level = {}
+
+    level.init = function(self, inGameContext)
+        levelBase.init(self, inGameContext)
+    end
+    level.onEnterScreen = function(self)
+        levelBase.onEnterScreen(self)
+    end
+    level.onExitScreen = function(self)
+        levelBase.onExitScreen(self)
+    end
+    level.update = function(self)
+        levelBase.update(self)
+    end
+    level.draw = function(self)
+        levelBase.draw(self)
+    end
+    level.getMapOffset = function(self)
+        return levelBase.getMapOffset(self)
+    end
+
+
+    setmetatable(level, levelBase)
+    level.mx = level_x * 16
+    level.my = level_y * 16
+    return level
+end
+
 function levelBase:init(inGameContext)
     self.gameContext = inGameContext
 end
