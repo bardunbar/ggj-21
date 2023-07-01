@@ -5,6 +5,7 @@ gameContext = {
     screens =
     {
         mainMenu = mainMenu,
+        credits = credits,
         whiteboxLevel = whiteboxLevel,
         firstLevel = firstLevel,
         secondLevel = createMapLevel(50, 0),

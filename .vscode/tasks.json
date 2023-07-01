@@ -11,7 +11,7 @@
         {
             "label": "publish",
             "type": "shell",
-            "command": "butler push builds\\${fileBasenameNoExtension}_html\\${fileBasenameNoExtension}.zip dunbargames/ggj-21:html5",
+            "command": "butler push builds\\${fileBasenameNoExtension}_html\\${fileBasenameNoExtension}.zip dunbargames/out-of-bounds:html5",
             "dependsOrder": "sequence",
             "dependsOn":[
                 "export"
