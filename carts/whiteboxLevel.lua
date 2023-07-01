@@ -10,6 +10,7 @@ end
 
 function whiteboxLevel:onEnterScreen()
     super.onEnterScreen(self)
+    music(1)
 end
 
 function whiteboxLevel:onExitScreen()

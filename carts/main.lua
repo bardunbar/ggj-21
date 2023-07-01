@@ -15,7 +15,7 @@ gameContext = {
     },
 }
 
-function gameContext:resetState()
+function gameContext:resetState(isNextLevel)
     -- reset powerups
     reload(0x1000, 0x1000, 0x2000)
 
@@ -27,7 +27,9 @@ function gameContext:resetState()
     self.player.freeze = false
 
     -- add reset to counter
-    self.player.numResets += 1
+    if not isNextLevel then
+        self.player.numResets += 1
+    end
 end
 
 function gameContext:goToScreen(screenKey, levelIndex)
@@ -66,7 +68,7 @@ end
 
 function gameContext:resetGame()
     self.isLevelComplete = false
-    self.player.numResets = -1
+    self.player.numResets = 0
 end
 
 -- Main functions
@@ -78,8 +80,6 @@ function _init()
     for _, screen in pairs(gameContext.screens) do
         screen:init(gameContext)
     end
-
-    music(0)
 
     gameContext:goToScreen("mainMenu")
 end
