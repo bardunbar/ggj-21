@@ -79,8 +79,6 @@ function _init()
         screen:init(gameContext)
     end
 
-    music(0)
-
     gameContext:goToScreen("mainMenu")
 end
 

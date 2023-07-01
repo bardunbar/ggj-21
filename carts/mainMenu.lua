@@ -40,7 +40,7 @@ function mainMenu:init(inGameContext)
 end
 
 function mainMenu:onEnterScreen()
-
+    music(0)
 end
 
 function mainMenu:onExitScreen()
