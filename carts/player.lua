@@ -72,7 +72,7 @@ local function createBound(xDirection, yDirection)
                 self.yVelocity = 0
             end
         end
-        printDebug("x: " .. self.xVelocity .. ", y: " .. self.yVelocity)
+        -- printDebug("x: " .. self.xVelocity .. ", y: " .. self.yVelocity)
     end
     bound.isComplete = function(self)
         return self.xVelocity == 0 and self.yVelocity == 0
@@ -216,7 +216,7 @@ function player:update()
     elseif wasGrounded then
         -- Check if we can BOUND
         self.bounding = false
-        if btnp(4) then
+        if btn_down(4) then
             if self.boundQueue[1] then
                 sfx(0)
                 self.curBound = remove(self.boundQueue, 1)
@@ -239,7 +239,7 @@ function player:update()
     self:checkWinCondition()
 
     -- Set animation state variables
-    printDebug("self.dx: " .. self.dx .. ", self.dy: " .. self.dy)
+    -- printDebug("self.dx: " .. self.dx .. ", self.dy: " .. self.dy)
     self.direction = self.dx > 0 and 1 or self.dx < 0 and 0 or self.direction
     self.moving = self.dx ~= 0 or self.dy ~= 0
 end

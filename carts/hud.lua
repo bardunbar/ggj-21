@@ -6,7 +6,7 @@ end
 
 function hud:update()
     if self.gameContext.isLevelComplete then
-        if btnp(4) then
+        if btn_down(4) then
             if self.gameContext:hasNextLevel() then
                 self.gameContext:nextLevel()
             else

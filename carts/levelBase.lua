@@ -23,7 +23,8 @@ end
 function levelBase:update()
     self.gameContext.player:update()
 
-    if btnp(5) and not self.gameContext.isLevelComplete then
+
+    if btn_down(5) and not self.gameContext.isLevelComplete then
         -- self.gameContext:completeLevel()
         self.gameContext:resetState()
     end

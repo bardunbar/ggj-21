@@ -48,12 +48,12 @@ function mainMenu:onExitScreen()
 end
 
 function mainMenu:update()
-    if btnp(2) then
+    if btn_down(2) then
         self:upInput()
-    elseif btnp(3) then
+    elseif btn_down(3) then
         self:downInput()
     end
-    if btnp(4) then
+    if btn_down(4) then
         self.buttonOptions[self.highlightedButton].onPress()
     end
 end
