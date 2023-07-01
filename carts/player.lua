@@ -85,6 +85,7 @@ player = {
     currentAni = idle_animation,
     numResets = -1,
     bounding = false,
+    enteringMap = true,
     boundQueue = {
         createBound(0, -5),
         createBound(0, -5),
@@ -122,6 +123,7 @@ function player:solveCollisions(startx, starty)
         self.y = flr((self.y)/8)*8
         self.grounded = true
         self.accumulatedGravity = 0
+        self.enteringMap = false
     end
 
     val = mget((self.x + 4)/8, self.y / 8)
@@ -151,6 +153,10 @@ function player:processPickups()
         mset(self.x/8, self.y/8, 0)
     end
 
+end
+
+function player:checkWinCondition()
+    -- check win condition and send to next level if true
 end
 
 function player:update()
@@ -206,6 +212,7 @@ function player:update()
 
     self:solveCollisions(startx, starty)
     self:processPickups()
+    self:checkWinCondition()
 
     -- Set animation state variables
     printDebug("self.dx: " .. self.dx .. ", self.dy: " .. self.dy)
