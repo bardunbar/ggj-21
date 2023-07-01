@@ -108,16 +108,12 @@ function player:sense()
 end
 
 function player:solveCollisions(startx, starty)
+
     local xoffset=0
     if self.dx>0 then xoffset=7 end
 
-    local h=mget((self.x + xoffset) / 8, (self.y + 7) / 8)
+    local h=mget((self.x + xoffset) / 8, (self.y + 4) / 8)
     if fget(h,0) then
-        --they hit a wall so move them
-        --back to their original pos.
-        --it should really move them to
-        --the edge of the wall but this
-        --mostly works and is simpler.
         self.x = startx
     end
 
@@ -130,11 +126,12 @@ function player:solveCollisions(startx, starty)
 
     val = mget((self.x + 4)/8, self.y / 8)
     if fget(val, 0) then
-        self.y = starty
+        self.y = flr((self.y)/8 + 1)*8
         if self.curBound then
             self.curBound.yVelocity = 0
         end
     end
+
 end
 
 function player:processPickups()
@@ -142,7 +139,7 @@ function player:processPickups()
     local val = mget(self.x/8, self.y/8)
     if fget(val, 1) then
         add(self.boundQueue, createBound(0, boundY))
-        mset(self.x/8, self.y/8, 0) 
+        mset(self.x/8, self.y/8, 0)
     end
 
     if fget(val, 2) then
@@ -151,7 +148,7 @@ function player:processPickups()
         add(self.boundQueue, createBound(0, boundY))
         add(self.boundQueue, createBound(0, boundY))
         add(self.boundQueue, createBound(0, boundY))
-        mset(self.x/8, self.y/8, 0) 
+        mset(self.x/8, self.y/8, 0)
     end
 
 end
@@ -203,6 +200,7 @@ function player:update()
     end
 
     -- Update Position
+
     self.x += self.dx
     self.y += self.dy
 
@@ -210,7 +208,7 @@ function player:update()
     self:processPickups()
 
     -- Set animation state variables
-    -- printDebug("self.dx: " .. self.dx .. ", self.dy: " .. self.dy)
+    printDebug("self.dx: " .. self.dx .. ", self.dy: " .. self.dy)
     self.direction = self.dx > 0 and 1 or self.dx < 0 and 0 or self.direction
     self.moving = self.dx ~= 0 or self.dy ~= 0
 end
